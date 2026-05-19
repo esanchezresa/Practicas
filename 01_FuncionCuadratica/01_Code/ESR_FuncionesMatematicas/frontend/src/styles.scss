@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+.sg-map .cesium-viewer,
+.sg-map .cesium-widget,
+.sg-map canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.sg-map .cesium-viewer-toolbar,
+.sg-map .cesium-viewer-animationContainer,
+.sg-map .cesium-viewer-timelineContainer,
+.sg-map .cesium-viewer-bottom {
+  display: none;
+}
+
+.sg-credits .cesium-credit-textContainer,
+.sg-credits .cesium-credit-logoContainer,
+.sg-credits .cesium-credit-expand-link {
+  color: inherit;
+}

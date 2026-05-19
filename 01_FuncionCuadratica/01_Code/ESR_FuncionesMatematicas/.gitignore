@@ -1,0 +1,14 @@
+# Dependencias de Node (Angular/Three.js)
+node_modules/
+
+# Entorno virtual de Python
+.venv/
+venv/
+env/
+
+# Archivos de sistema y log
+.DS_Store
+npm-debug.log*
+
+__pycache__/
+*.pyc

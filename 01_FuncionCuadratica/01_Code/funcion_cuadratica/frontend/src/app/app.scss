@@ -1,0 +1,44 @@
+:host {
+  --bg-top: #f2f6f7;
+  --bg-bottom: #dce8ea;
+  --panel: #ffffff;
+  --line: #0d9488;
+  --text: #12343b;
+  --muted: #516a70;
+  --border: #d1dee1;
+  --danger: #bf1b52;
+
+  display: block;
+  min-height: 100dvh;
+  color: var(--text);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top right, #e6f5f2, transparent 44%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout {
+  display: flex;
+  gap: 1rem;
+}
+.paraboloide-section {
+  width: 80%;
+  height: 1000px; // o 60vh
+  margin: 2rem auto 0;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

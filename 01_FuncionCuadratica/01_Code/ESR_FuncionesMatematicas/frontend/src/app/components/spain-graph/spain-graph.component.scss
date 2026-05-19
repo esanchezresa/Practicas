@@ -1,0 +1,510 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sg-shell {
+  display: flex;
+  width: 100%;
+  height: 100vh; /* O la altura que tengas definida */
+  overflow: hidden;
+
+  /* --- ESTADO PANTALLA COMPLETA --- */
+  &.is-fullscreen {
+    // 1. El Panel pasa de estar al lado a estar ENCIMA
+    .sg-panel {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000; // Por encima de todo
+      
+      width: 220px; // Ancho fijo para que no ocupe toda la pantalla
+      height: auto;
+      max-height: calc(100vh - 40px);
+      
+      // Estética de "tarjeta flotante"
+      background: rgba(15, 23, 42, 0.9); // Fondo oscuro traslúcido
+      backdrop-filter: blur(10px); // Desenfoque moderno
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      
+      overflow-y: auto; // Por si hay muchos resultados de ruta
+    }
+
+    // 2. El Mapa se expande al 100% real
+    .sg-viewport {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; // Fondo
+    }
+  }
+}
+
+.sg-panel {
+  background: var(--c-surface, #fff);
+  border: 1px solid var(--c-border, #e2e8f0);
+  border-radius: var(--r-lg, 12px);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem;
+
+  flex: 0 0 320px; 
+  width: 320px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  overflow-y: auto; 
+  overflow-x: hidden;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__icon {
+    width: 28px;
+    height: 28px;
+    color: var(--c-accent, #0d9488);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--c-text, #0f172a);
+    line-height: 1.1;
+  }
+
+  &__sub {
+    font-size: 0.625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-3, #94a3b8);
+  }
+}
+
+.sg-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sg-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-text-3, #94a3b8);
+}
+
+.sg-divider {
+  height: 1px;
+  background: var(--c-border, #e2e8f0);
+  flex-shrink: 0;
+}
+
+.sg-btn-group {
+  display: flex;
+  gap: 4px;
+
+  &--triple button {
+    font-size: 0.6875rem;
+  }
+
+  button {
+    flex: 1;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--c-border, #e2e8f0);
+    border-radius: var(--r-sm, 5px);
+    background: transparent;
+    color: var(--c-text-2, #475569);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.14s;
+
+    &.is-active {
+      border-color: var(--c-accent, #0d9488);
+      background: var(--c-accent-bg, rgba(13, 148, 136, 0.08));
+      color: var(--c-accent, #0d9488);
+      font-weight: 600;
+    }
+
+    &:not(.is-active):hover {
+      background: var(--c-surface-inset, #f1f5f9);
+    }
+  }
+}
+
+.sg-select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  svg {
+    position: absolute;
+    left: 0.6rem;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+
+  select {
+    width: 100%;
+    padding: 0.45rem 0.6rem 0.45rem 2.1rem;
+    border: 1px solid var(--c-border, #e2e8f0);
+    border-radius: var(--r-sm, 5px);
+    background: var(--c-surface-inset, #f1f5f9);
+    color: var(--c-text, #0f172a);
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    appearance: none;
+    transition: border-color 0.14s, box-shadow 0.14s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--c-accent, #0d9488);
+      box-shadow: 0 0 0 3px var(--c-accent-ring, rgba(13, 148, 136, 0.18));
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.sg-btn-calc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: var(--r-md, 8px);
+  background: var(--c-accent, #0d9488);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.16s, opacity 0.16s;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--c-accent-dark, #0f766e);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.sg-route-result {
+  background: #fff0f0;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--r-md, 8px);
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #ef4444;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+  }
+
+  &__distance {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--c-text, #0f172a);
+    line-height: 1;
+
+    em {
+      font-size: 0.875rem;
+      font-weight: 400;
+      font-style: normal;
+      color: var(--c-text-2, #475569);
+      margin-left: 0.2rem;
+    }
+  }
+
+  &__stops {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--c-text-2, #475569);
+  }
+}
+
+.sg-stop {
+  font-weight: 600;
+  color: var(--c-text, #0f172a);
+}
+
+.sg-stop-sep {
+  color: #ef4444;
+  font-size: 0.6875rem;
+}
+
+.sg-btn-reset {
+  padding: 0.3rem 0.75rem;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--r-sm, 5px);
+  background: transparent;
+  color: #ef4444;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: all 0.14s;
+
+  &:hover {
+    background: #fef2f2;
+  }
+}
+
+.sg-stats {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.sg-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: var(--c-surface-inset, #f1f5f9);
+  border-radius: var(--r-sm, 5px);
+  padding: 0.5rem 0.25rem;
+
+  &__val {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--c-accent, #0d9488);
+    font-family: var(--font-mono);
+  }
+
+  &__lbl {
+    font-size: 0.625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--c-text-3, #94a3b8);
+  }
+}
+
+.sg-error {
+  background: var(--c-danger-bg, #fef2f2);
+  border: 1px solid var(--c-danger-border, rgba(220, 38, 38, 0.25));
+  border-radius: var(--r-sm, 5px);
+  padding: 0.6rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--c-danger, #dc2626);
+}
+
+.sg-viewport {
+  flex: 1; 
+  
+  /* IMPORTANTE: min-width 0 evita que el canvas empuje al panel si se hace muy grande */
+  min-width: 0; 
+  
+  position: relative;
+  position: relative;
+  border-radius: var(--r-lg, 12px);
+  overflow: hidden;
+  background: #0a0f1e;
+  border: 1px solid var(--c-border, #e2e8f0);
+  box-shadow: var(--shadow-sm);
+}
+
+.sg-map {
+  width: 100%;
+  height: 100%;
+}
+
+.sg-credits {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 4;
+  max-width: 45%;
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.sg-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  background: #0a0f1e;
+  z-index: 10;
+  color: var(--c-text-3, #94a3b8);
+  font-size: 0.875rem;
+}
+
+.sg-overlay-info {
+  position: absolute;
+  bottom: 0.875rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.3rem 0.875rem;
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.62);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.sg-viewport {
+  position: relative; /* Muy importante */
+  /* ... el resto de estilos que ya tengas (width, height, etc) ... */
+}
+
+.sg-reset-camera, .sg-fullscreen-btn {
+  position: absolute;
+  right: 20px;
+  z-index: 999;
+  width: 42px;
+  height: 42px;
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #1e293b;
+    border-color: #3b82f6;
+  }
+}
+
+/* 1. Estilos del contenedor general */
+.sg-app-container {
+  display: flex; /* Asumo que tienes el panel al lado del mapa */
+  width: 100%;
+  height: 100%; // o la altura normal que tengas en tu web
+  position: relative;
+  background-color: #0f172a; // Un fondo oscuro por si acaso
+
+  /* MAGIA: Cuando entra en fullscreen */
+  &.is-fullscreen {
+    /* El panel se vuelve flotante */
+    .sg-sidebar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      
+      /* Le damos un aspecto de tarjeta flotante */
+      height: auto;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto; // Por si el contenido es muy largo
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* El mapa ocupa el 100% absoluto de la pantalla */
+    .sg-viewport {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+}
+
+/* 2. Posicionamiento de los botones (esquina superior derecha) */
+/* Botón de la casa que ya tenías */
+.sg-reset-camera { top: 20px; }
+.sg-fullscreen-btn { top: 72px; }
+
+/* Nuevo Botón de Fullscreen (lo ponemos justo debajo del otro) */
+
+
+.sg-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: sg-spin 0.7s linear infinite;
+
+  &--lg {
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+    border-color: rgba(45, 212, 191, 0.2);
+    border-top-color: #2dd4bf;
+  }
+}
+
+@keyframes sg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .sg-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: auto;
+  }
+
+  .sg-viewport {
+    height: 420px;
+  }
+
+  .sg-overlay-info {
+    width: calc(100% - 1.5rem);
+    text-align: center;
+    white-space: normal;
+  }
+}

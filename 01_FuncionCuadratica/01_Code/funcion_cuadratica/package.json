@@ -1,0 +1,14 @@
+{
+  "name": "funcion-cuadratica",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently -k -n BACKEND,FRONTEND -c green,cyan \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": ".venv\\Scripts\\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload",
+    "start:frontend": "npm --prefix frontend start -- --port 0",
+    "build:frontend": "npm --prefix frontend run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

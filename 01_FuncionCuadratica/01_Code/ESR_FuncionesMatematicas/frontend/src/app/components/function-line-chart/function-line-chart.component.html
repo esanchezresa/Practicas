@@ -1,0 +1,54 @@
+<section class="panel chart-panel">
+
+  <div class="panel-header">
+    <div class="panel-header__left">
+      <span class="panel-module">Visualización</span>
+      <h2 class="panel-title">Gráfica {{ viewMode === '3d' ? '3D' : '2D' }}</h2>
+    </div>
+    <div class="panel-header__right">
+      <button type="button" class="btn btn--ghost" (click)="toggleMode()">
+        {{ viewMode === '3d' ? 'Vista 2D' : 'Vista 3D' }}
+      </button>
+      <button type="button" class="btn btn--ghost" (click)="resetZoom()">Reset vista</button>
+    </div>
+  </div>
+
+  <div class="panel-hint">
+    @if (viewMode === '3d') {
+      Click izquierdo: rotar · Click derecho: mover · Rueda: zoom
+    } @else {
+      Arrastrar: mover · Rueda del ratón: zoom
+    }
+  </div>
+
+  <div class="chart-wrap" #chartWrap>
+    <div #canvasHost class="canvas-host" [class.hidden]="viewMode === '2d'"></div>
+    <canvas #canvas2d class="canvas-2d" [class.hidden]="viewMode === '3d'"></canvas>
+
+    @if (expression) {
+      <div class="chart-legend">
+        <div class="legend-row">
+          <span class="legend-swatch"></span>
+          <span class="legend-expr">f(x) = {{ expression }}</span>
+        </div>
+        <div class="legend-row legend-row--meta">
+          <span>x ∈ [{{ xMin }}, {{ xMax }}]</span>
+          @if (yMin !== null && yMax !== null) {
+            <span class="legend-sep">·</span>
+            <span>y ∈ [{{ yMin | number:'1.2-2' }}, {{ yMax | number:'1.2-2' }}]</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (isLoading) {
+    <div class="panel-loading">
+      <span class="loading-dot"></span>
+      <span class="loading-dot"></span>
+      <span class="loading-dot"></span>
+      <span>Calculando…</span>
+    </div>
+  }
+
+</section>

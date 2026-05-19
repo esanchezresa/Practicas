@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(taskkill //IM python.exe //F)",
+      "Bash(taskkill //IM python3.exe //F)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}

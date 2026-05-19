@@ -1,0 +1,98 @@
+<section class="layout">
+
+  <!-- ── Parameters panel ──────────────────────────────────────────────── -->
+  <form class="panel" [formGroup]="form" novalidate>
+
+    <div class="panel-header">
+      <span class="panel-module">Módulo</span>
+      <h2 class="panel-title">Funciones 2D</h2>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- Expression -->
+      <div class="field">
+        <label class="field-label" for="expression">Expresión f(x)</label>
+        <div class="field-mono-wrap">
+          <span class="field-prefix">f(x) =</span>
+          <input
+            id="expression"
+            class="field-input field-input--mono"
+            type="text"
+            formControlName="expression"
+            placeholder="x^2, sin(x), x^3 - 2x + 1…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+        <p class="field-hint">Operadores: + − * / ^ · Funciones: sin cos tan sqrt exp log abs</p>
+      </div>
+
+      <!-- Domain -->
+      <div class="field">
+        <label class="field-label">Dominio x</label>
+        <div class="range-row">
+          <div class="range-field">
+            <span class="range-label">mín</span>
+            <input
+              id="xMin"
+              class="field-input field-input--compact"
+              type="number"
+              step="0.5"
+              formControlName="xMin"
+            />
+          </div>
+          <div class="range-sep" aria-hidden="true">—</div>
+          <div class="range-field">
+            <span class="range-label">máx</span>
+            <input
+              id="xMax"
+              class="field-input field-input--compact"
+              type="number"
+              step="0.5"
+              formControlName="xMax"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Status row -->
+      <div class="status-row">
+        <span class="status-chip">260 muestras / actualización</span>
+      </div>
+
+      <!-- Connecting to backend -->
+      @if (isConnecting) {
+        <div class="alert-connecting" role="status">
+          <svg class="spinner" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="20 18" stroke-linecap="round"/>
+          </svg>
+          Conectando con el servidor…
+        </div>
+      }
+
+      <!-- Error -->
+      @if (hasError) {
+        <div class="alert-error" role="alert">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          {{ errorMessage }}
+        </div>
+      }
+
+    </div>
+  </form>
+
+  <!-- ── Chart ─────────────────────────────────────────────────────────── -->
+  <app-function-line-chart
+    [points]="points"
+    [isLoading]="isLoading"
+    [expression]="form.controls.expression.value"
+    [xMin]="form.controls.xMin.value"
+    [xMax]="form.controls.xMax.value"
+    (expressionChange)="onExpressionFromChart($event)">
+  </app-function-line-chart>
+
+</section>

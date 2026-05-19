@@ -1,0 +1,28 @@
+<main class="page">
+  <app-header [title]="title" [description]="description"></app-header>
+
+  <section class="layout">
+    <app-quadratic-controls
+      [form]="form"
+      [discriminant]="discriminant"
+      [rootsDisplay]="rootsDisplay"
+      [vertexX]="vertexX"
+      [vertexY]="vertexY"
+      [hasError]="hasError"
+    ></app-quadratic-controls>
+
+    <app-quadratic-chart
+      [points]="curvePoints"
+      [roots]="roots"
+      [vertexX]="vertexX"
+      [vertexY]="vertexY"
+      [isLoading]="isLoading"
+      [xMin]="form.value.xMin ?? -5"
+      [xMax]="form.value.xMax ?? 5"
+      (coefficientsChange)="onChartCoefficientsChange($event)"
+    ></app-quadratic-chart>
+  </section>
+  <section class="paraboloide-section">
+    <router-outlet></router-outlet>
+  </section>
+</main>

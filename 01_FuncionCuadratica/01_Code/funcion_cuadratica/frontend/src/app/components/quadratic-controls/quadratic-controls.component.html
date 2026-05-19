@@ -1,0 +1,70 @@
+<form class="panel" [formGroup]="form" novalidate>
+  <h2>Parametros</h2>
+
+  <div class="control-block">
+    <label for="a">a</label>
+    <div class="control-row">
+      <input id="a" type="number" step="0.1" formControlName="a" />
+      <input
+        type="range"
+        min="-10"
+        max="10"
+        step="0.1"
+        [value]="form.controls.a.value"
+        (input)="onSliderInput('a', $event)"
+      />
+    </div>
+  </div>
+
+  <div class="control-block">
+    <label for="b">b</label>
+    <div class="control-row">
+      <input id="b" type="number" step="0.1" formControlName="b" />
+      <input
+        type="range"
+        min="-20"
+        max="20"
+        step="0.1"
+        [value]="form.controls.b.value"
+        (input)="onSliderInput('b', $event)"
+      />
+    </div>
+  </div>
+
+  <div class="control-block">
+    <label for="c">c</label>
+    <div class="control-row">
+      <input id="c" type="number" step="0.1" formControlName="c" />
+      <input
+        type="range"
+        min="-30"
+        max="30"
+        step="0.1"
+        [value]="form.controls.c.value"
+        (input)="onSliderInput('c', $event)"
+      />
+    </div>
+  </div>
+
+  <div class="control-row x-range">
+    <div>
+      <label for="xMin">x min</label>
+      <input id="xMin" type="number" step="1" formControlName="xMin" />
+    </div>
+    <div>
+      <label for="xMax">x max</label>
+      <input id="xMax" type="number" step="1" formControlName="xMax" />
+    </div>
+  </div>
+
+  <article class="stats">
+    <h3>Resultados</h3>
+    <p>Discriminante: {{ formatNumber(discriminant, 4) }}</p>
+    <p>Vertice: ({{ formatNumber(vertexX, 4) }}, {{ formatNumber(vertexY, 4) }})</p>
+    <p>Raices: {{ rootsDisplay }}</p>
+  </article>
+
+  @if (hasError) {
+    <p class="error">No se pudo conectar al backend. Verifica que FastAPI este ejecutandose en el puerto 8000.</p>
+  }
+</form>

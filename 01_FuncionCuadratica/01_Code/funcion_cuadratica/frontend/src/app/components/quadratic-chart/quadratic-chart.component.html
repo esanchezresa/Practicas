@@ -1,0 +1,15 @@
+<section class="panel chart-panel">
+  <div class="chart-toolbar">
+    <h2>Grafica 3D</h2>
+    <button type="button" class="secondary" (click)="resetZoom()">Reset vista</button>
+  </div>
+  <p class="hint">Rota con click izquierdo, mueve con click derecho y usa la rueda para zoom.</p>
+
+  <div class="chart-wrap">
+    <div #canvasHost class="canvas-host"></div>
+  </div>
+
+  @if (isLoading) {
+    <p class="loading">Calculando...</p>
+  }
+</section>
